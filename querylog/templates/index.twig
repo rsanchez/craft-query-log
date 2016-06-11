@@ -1,0 +1,140 @@
+<div class="querylog">
+    <label for="querylog-toggle" class="querylog-button">
+        Query Log
+    </label>
+    <input type="checkbox" id="querylog-toggle" class="querylog-toggle">
+    <div class="querylog-tray">
+        <table class="querylog-queries" cellpadding="0" border="0" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>Query</th>
+                    <th width="80">Duration</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for query in queries %}
+                <tr>
+                    <td><code class="language-sql querylog-sql">{{ query.sql }}</code></td>
+                    <td width="80">{{ query.duration }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.1/themes/prism-coy.min.css">
+
+<style>
+.querylog {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    font-family: HelveticaNeue, "Open Sans", Helvetica, Arial, sans-serif;
+    color: #000;
+    background-color: #fff;
+}
+.querylog-button {
+    height: 30px;
+    font-size: 13px;
+    line-height: 20px;
+    vertical-align: middle;
+    width: auto;
+    border: none;
+    display: inline-block;
+    margin: 0 0 0 20px;
+    border-radius: 3px 3px 0 0;
+    padding: 6px 12px;
+    text-align: center;
+    cursor: pointer;
+    white-space: nowrap;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    cursor: pointer;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    color: #fff;
+    background-image: -webkit-linear-gradient(#da5a47, #cc5643);
+    background-image: -moz-linear-gradient(#da5a47, #cc5643);
+    background-image: -ms-linear-gradient(#da5a47, #cc5643);
+    background-image: -o-linear-gradient(#da5a47, #cc5643);
+    background-image: linear-gradient(#da5a47, #cc5643);
+    -webkit-box-shadow: inset 0 0 0 1px rgba(0, 0, 20, 0.1), 0 0 20px rgba(0, 0, 0, 0.25);
+    -moz-box-shadow: inset 0 0 0 1px rgba(0, 0, 20, 0.1), 0 0 20px rgba(0, 0, 0, 0.25);
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 20, 0.1), 0 0 20px rgba(0, 0, 0, 0.25);
+    z-index: 1;
+}
+.querylog-button:hover {
+    background-image: -webkit-linear-gradient(#bf503f, #b34b3b);
+    background-image: -moz-linear-gradient(#bf503f, #b34b3b);
+    background-image: -ms-linear-gradient(#bf503f, #b34b3b);
+    background-image: -o-linear-gradient(#bf503f, #b34b3b);
+    background-image: linear-gradient(#bf503f, #b34b3b);
+}
+.querylog-tray {
+    overflow-y: hidden;
+    max-height: 0;
+    transition-property: all;
+    transition-duration: .5s;
+    transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+    padding: 0 20px;
+}
+.querylog-toggle {
+    display: none;
+}
+.querylog-toggle:checked + .querylog-tray {
+    -webkit-box-shadow: 0 0 0 1px rgba(0, 0, 20, 0.1);
+    -moz-box-shadow: 0 0 0 1px rgba(0, 0, 20, 0.1);
+    box-shadow: 0 0 0 1px rgba(0, 0, 20, 0.1);
+    height: auto;
+    max-height: 500px;
+    overflow-y: scroll;
+}
+.querylog-queries {
+    font-size: 13px;
+    line-height: 20px;
+    table-layout: fixed;
+    margin: 20px 0 0;
+}
+.querylog-queries th {
+    text-align: left;
+}
+.querylog-queries th + th {
+    padding-left: 30px;
+}
+.querylog-queries th {
+    font-weight: bold;
+    vertical-align: top;
+    font-size: 11px;
+    line-height: 1.2;
+    padding: 5px 14px;
+    color: rgba(0, 0, 0, 0.5);
+}
+.querylog-queries td {
+    border-top: 1px dotted #e3e5e8;
+    padding: 15px 14px;
+    word-wrap: break-word;
+    vertical-align: top;
+}
+.querylog-queries tr:first-child td {
+    border-top-style: solid;
+}
+.querylog-sql[class*=language-] {
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word;
+    border: none;
+}
+.querylog-queries td + td {
+    padding-left: 30px;
+}
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.1/components/prism-core.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.1/components/prism-sql.min.js"></script>
