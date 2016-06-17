@@ -1,41 +1,14 @@
-<div class="querylog">
-    <label for="querylog-toggle" class="querylog-button">
-        Query Log
-    </label>
-    <input type="checkbox" id="querylog-toggle" class="querylog-toggle">
-    <div class="querylog-tray">
-        <table class="querylog-queries" cellpadding="0" border="0" cellspacing="0" width="100%">
-            <thead>
-                <tr>
-                    <th>Query</th>
-                    <th width="80">Duration</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for query in queries %}
-                <tr>
-                    <td><code class="language-sql querylog-sql">{{ query.sql }}</code></td>
-                    <td width="80">{{ query.duration }}</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.1/themes/prism-coy.min.css">
-
 <style>
-.querylog {
+#querylog {
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
     font-family: HelveticaNeue, "Open Sans", Helvetica, Arial, sans-serif;
     color: #000;
-    background-color: #fff;
+    background-color: transparent;
 }
-.querylog-button {
+#querylog-button {
     height: 30px;
     font-size: 13px;
     line-height: 20px;
@@ -68,45 +41,53 @@
     box-shadow: inset 0 0 0 1px rgba(0, 0, 20, 0.1), 0 0 20px rgba(0, 0, 0, 0.25);
     z-index: 1;
 }
-.querylog-button:hover {
+#querylog-button:hover {
     background-image: -webkit-linear-gradient(#bf503f, #b34b3b);
     background-image: -moz-linear-gradient(#bf503f, #b34b3b);
     background-image: -ms-linear-gradient(#bf503f, #b34b3b);
     background-image: -o-linear-gradient(#bf503f, #b34b3b);
     background-image: linear-gradient(#bf503f, #b34b3b);
 }
-.querylog-tray {
+#querylog-tray {
     overflow-y: hidden;
     max-height: 0;
     transition-property: all;
     transition-duration: .5s;
     transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
     padding: 0 20px;
+    background: #fff;
 }
-.querylog-toggle {
+#querylog-toggle {
     display: none;
 }
-.querylog-toggle:checked + .querylog-tray {
-    -webkit-box-shadow: 0 0 0 1px rgba(0, 0, 20, 0.1);
-    -moz-box-shadow: 0 0 0 1px rgba(0, 0, 20, 0.1);
-    box-shadow: 0 0 0 1px rgba(0, 0, 20, 0.1);
+#querylog-toggle:checked + #querylog-tray {
+    -webkit-box-shadow: inset 0 0 0 1px rgba(0, 0, 20, 0.1), 0 0 20px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: inset 0 0 0 1px rgba(0, 0, 20, 0.1), 0 0 20px rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 20, 0.1), 0 0 20px rgba(0, 0, 0, 0.1);
     height: auto;
     max-height: 500px;
     overflow-y: scroll;
 }
-.querylog-queries {
+#querylog-count {
+    font-size: 13px;
+    line-height: 18px;
+    color: #29323d;
+    padding-left: 14px;
+    margin: 20px 0;
+}
+#querylog-queries {
     font-size: 13px;
     line-height: 20px;
     table-layout: fixed;
     margin: 20px 0 0;
 }
-.querylog-queries th {
+#querylog-queries th {
     text-align: left;
 }
-.querylog-queries th + th {
+#querylog-queries th + th {
     padding-left: 30px;
 }
-.querylog-queries th {
+#querylog-queries th {
     font-weight: bold;
     vertical-align: top;
     font-size: 11px;
@@ -114,16 +95,16 @@
     padding: 5px 14px;
     color: rgba(0, 0, 0, 0.5);
 }
-.querylog-queries td {
+#querylog-queries td {
     border-top: 1px dotted #e3e5e8;
     padding: 15px 14px;
     word-wrap: break-word;
     vertical-align: top;
 }
-.querylog-queries tr:first-child td {
+#querylog-queries tr:first-child td {
     border-top-style: solid;
 }
-.querylog-sql[class*=language-] {
+#querylog-queries code[class*=language] {
     white-space: pre-wrap;
     white-space: -moz-pre-wrap;
     white-space: -pre-wrap;
@@ -131,10 +112,37 @@
     word-wrap: break-word;
     border: none;
 }
-.querylog-queries td + td {
+#querylog-queries td + td {
     padding-left: 30px;
 }
 </style>
 
+<div id="querylog">
+    <label for="querylog-toggle" id="querylog-button">
+        Query Log
+    </label>
+    <input type="checkbox" id="querylog-toggle">
+    <div id="querylog-tray">
+        <div id="querylog-count">{{ queries|length }} total queries.</div>
+        <table id="querylog-queries" cellpadding="0" border="0" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>Query</th>
+                    <th width="80">Duration</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for query in queries %}
+                <tr>
+                    <td><code class="language-sql">{{ query.sql }}</code></td>
+                    <td width="80">{{ query.duration }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.1/themes/prism-coy.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.1/components/prism-core.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.1/components/prism-sql.min.js"></script>
