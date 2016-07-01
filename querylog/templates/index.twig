@@ -4,19 +4,23 @@
     bottom: 0;
     left: 0;
     right: 0;
-    font-family: HelveticaNeue, "Open Sans", Helvetica, Arial, sans-serif;
     color: #000;
     background-color: transparent;
+    z-index: 9999999999;
 }
 #querylog-button {
+    position: absolute;
+    top: -30px;
+    left: 20px;
     height: 30px;
+    font-family: HelveticaNeue, "Open Sans", Helvetica, Arial, sans-serif;
     font-size: 13px;
     line-height: 20px;
     vertical-align: middle;
     width: auto;
     border: none;
     display: inline-block;
-    margin: 0 0 0 20px;
+    margin: 0;
     border-radius: 3px 3px 0 0;
     padding: 6px 12px;
     text-align: center;
@@ -36,9 +40,9 @@
     background-image: -ms-linear-gradient(#da5a47, #cc5643);
     background-image: -o-linear-gradient(#da5a47, #cc5643);
     background-image: linear-gradient(#da5a47, #cc5643);
-    -webkit-box-shadow: inset 0 0 0 1px rgba(0, 0, 20, 0.1), 0 0 20px rgba(0, 0, 0, 0.25);
-    -moz-box-shadow: inset 0 0 0 1px rgba(0, 0, 20, 0.1), 0 0 20px rgba(0, 0, 0, 0.25);
-    box-shadow: inset 0 0 0 1px rgba(0, 0, 20, 0.1), 0 0 20px rgba(0, 0, 0, 0.25);
+    -webkit-box-shadow: inset 0 0 0 1px rgba(0, 0, 20, 0.1), 0 -7px 20px -7px rgba(0, 0, 0, 0.25);
+    -moz-box-shadow: inset 0 0 0 1px rgba(0, 0, 20, 0.1), 0 -7px 20px -7px rgba(0, 0, 0, 0.25);
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 20, 0.1), 0 -7px 20px -7px rgba(0, 0, 0, 0.25);
     z-index: 1;
 }
 #querylog-button:hover {
@@ -69,6 +73,7 @@
     overflow-y: scroll;
 }
 #querylog-count {
+    font-family: HelveticaNeue, "Open Sans", Helvetica, Arial, sans-serif;
     font-size: 13px;
     line-height: 18px;
     color: #29323d;
@@ -83,6 +88,7 @@
 }
 #querylog-queries th {
     text-align: left;
+    font-family: HelveticaNeue, "Open Sans", Helvetica, Arial, sans-serif;
 }
 #querylog-queries th + th {
     padding-left: 30px;
@@ -96,10 +102,14 @@
     color: rgba(0, 0, 0, 0.5);
 }
 #querylog-queries td {
+    font-family: HelveticaNeue, "Open Sans", Helvetica, Arial, sans-serif;
     border-top: 1px dotted #e3e5e8;
     padding: 15px 14px;
     word-wrap: break-word;
     vertical-align: top;
+}
+#querylog-queries td + td {
+    word-wrap: normal;
 }
 #querylog-queries tr:first-child td {
     border-top-style: solid;
@@ -111,6 +121,10 @@
     white-space: -o-pre-wrap;
     word-wrap: break-word;
     border: none;
+    font-family: monospace;
+}
+#querylog-queries .token {
+    font-family: monospace;
 }
 #querylog-queries td + td {
     padding-left: 30px;
@@ -128,14 +142,14 @@
             <thead>
                 <tr>
                     <th>Query</th>
-                    <th width="80">Duration</th>
+                    <th width="90">Duration</th>
                 </tr>
             </thead>
             <tbody>
             {% for query in queries %}
                 <tr>
                     <td><code class="language-sql">{{ query.sql }}</code></td>
-                    <td width="80">{{ query.duration }}</td>
+                    <td width="90">{{ query.duration }}</td>
                 </tr>
             {% endfor %}
             </tbody>
